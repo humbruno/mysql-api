@@ -8,10 +8,10 @@ import (
 
 func main() {
 	cfg := mysql.Config{
-		User:                 "root",
-		Passwd:               "mypassword",
-		Addr:                 "",
-		DBName:               "projectmanager",
+		User:                 Envs.DBUser,
+		Passwd:               Envs.DBPassword,
+		Addr:                 Envs.DBAddress,
+		DBName:               Envs.DBName,
 		Net:                  "tcp",
 		AllowNativePasswords: true,
 		ParseTime:            true,
@@ -23,7 +23,9 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	store := NewStore(db)
+
 	api := NewAPIServer(":3000", store)
 	api.Serve()
 }
